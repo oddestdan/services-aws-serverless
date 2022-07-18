@@ -1,4 +1,4 @@
-import { IProductService } from './services/products.type';
+import { IProductService } from './types/products.type';
 import { errorResponse, successResponse } from './utils/apiResponseBuilder';
 
 export const createProductHandler =

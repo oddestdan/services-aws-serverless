@@ -8,9 +8,13 @@ provider:
   region: us-east-1
 
 plugins:
+  - serverless-auto-swagger
   - serverless-webpack
 
 custom:
+  autoswagger:
+    typefiles:
+      - ./src/types/products.type.ts
   webpack:
     webpackConfig: 'webpack.config.js'
     includeModules: true
@@ -44,3 +48,4 @@ functions:
           request:
             schema:
               application/json: ${file(src/schemas/createProductSchema.json)}
+          bodyType: IProduct

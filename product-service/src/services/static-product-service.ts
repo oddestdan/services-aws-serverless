@@ -1,4 +1,4 @@
-import { IProductService, IProduct } from './products.type';
+import { IProductService, IProduct } from '../types/products.type';
 import { v4 as uuidv4 } from 'uuid';
 
 import products from './products-data.json';
