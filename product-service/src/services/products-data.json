@@ -1,0 +1,50 @@
+[
+  {
+    "count": 6,
+    "description": "Charizard is a beastly dragon",
+    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80aa",
+    "price": 25.9,
+    "title": "Charizard",
+    "image": "https://img.pokemondb.net/artwork/large/charizard.jpg"
+  },
+  {
+    "count": 25,
+    "description": "Pikachu. Who the h*ll doesn't recognize Pikachu??",
+    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a0",
+    "price": 35.9,
+    "title": "Pikachu",
+    "image": "https://img.pokemondb.net/artwork/large/pikachu.jpg"
+  },
+  {
+    "count": 95,
+    "description": "You can't see him, you can't sense him. His name's Gengar, please arrest him",
+    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a2",
+    "price": 25.9,
+    "title": "Gengar",
+    "image": "https://img.pokemondb.net/artwork/large/gengar.jpg"
+  },
+  {
+    "count": 130,
+    "description": "Gigachad Magikarp",
+    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a1",
+    "price": 69.9,
+    "title": "Gyarados",
+    "image": "https://img.pokemondb.net/artwork/large/gyarados.jpg"
+  },
+  {
+    "count": 133,
+    "description": "Two-faced b*tch... Cute tho. But Cycles is better",
+    "id": "7567ec4b-b10c-48c5-9345-fc73c48a80a4",
+    "price": 15.0,
+    "title": "Eevee",
+    "image": "https://img.pokemondb.net/artwork/large/eevee.jpg"
+  },
+  {
+    "count": 149,
+    "description": "Curly cutie",
+    "id": "7567ec4b-b10c-48c5-9345-fc73348a80a5",
+    "price": 55.9,
+    "title": "Dragonite",
+    "image": "https://img.pokemondb.net/artwork/large/dragonite.jpg"
+  }
+]
