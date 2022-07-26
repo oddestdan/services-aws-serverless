@@ -1,4 +1,4 @@
-import * as handlers from './src';
+import * as handlers from './src/functions';
 import { ProductService } from './src/services/product-service';
 // import { seedProducts } from './src/services/seed-products';
 

@@ -1,6 +1,6 @@
-import { IProductService } from './types/products.type';
-import { errorResponse, successResponse } from './utils/apiResponseBuilder';
-import { winstonLogger } from './utils/winstonLogger';
+import { IProductService } from '../types/products.type';
+import { errorResponse, successResponse } from '../utils/apiResponseBuilder';
+import { winstonLogger } from '../utils/winstonLogger';
 
 export const getProductByIdHandler =
   (productService: IProductService) => async (event) => {

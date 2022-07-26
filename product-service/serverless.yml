@@ -16,6 +16,7 @@ provider:
 plugins:
   - serverless-auto-swagger
   - serverless-webpack
+  - serverless-offline
 
 custom:
   autoswagger:
@@ -25,6 +26,8 @@ custom:
     webpackConfig: 'webpack.config.js'
     includeModules: true
     dotenvVars: ${file(configs.js)}
+  serverless-offline:
+    httpPort: 8000
 
 functions:
   getProductById:

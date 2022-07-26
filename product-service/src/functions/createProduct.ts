@@ -1,6 +1,6 @@
-import { CreateProductSchema, IProductService } from './types/products.type';
-import { errorResponse, successResponse } from './utils/apiResponseBuilder';
-import { winstonLogger } from './utils/winstonLogger';
+import { CreateProductSchema, IProductService } from '../types/products.type';
+import { errorResponse, successResponse } from '../utils/apiResponseBuilder';
+import { winstonLogger } from '../utils/winstonLogger';
 
 export const createProductHandler =
   (productService: IProductService) => async (event) => {

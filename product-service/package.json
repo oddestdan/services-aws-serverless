@@ -4,6 +4,7 @@
   "description": "Product Service API (AWS API Gateway + AWS Lambda + Serverless)",
   "main": "handler.js",
   "scripts": {
+    "dev": "sls offline",
     "deploy": "sls deploy"
   },
   "devDependencies": {
@@ -14,7 +15,9 @@
     "@types/uuid": "^8.3.0",
     "dotenv": "^8.2.0",
     "fork-ts-checker-webpack-plugin": "^3.0.1",
+    "serverless": "^3.21.0",
     "serverless-auto-swagger": "^2.8.2",
+    "serverless-offline": "^9.0.0",
     "serverless-webpack": "^5.4.0",
     "ts-loader": "^5.3.3",
     "ts-node": "^8.10.2",
