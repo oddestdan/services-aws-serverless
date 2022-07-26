@@ -1,4 +1,4 @@
-import { IProductService } from './types/products.type';
+import { CreateProductSchema, IProductService } from './types/products.type';
 import { errorResponse, successResponse } from './utils/apiResponseBuilder';
 import { winstonLogger } from './utils/winstonLogger';
 
@@ -8,9 +8,10 @@ export const createProductHandler =
       winstonLogger.logInfo(`Incoming event: ${JSON.stringify(event)}`);
       const productBody = JSON.parse(event.body);
 
-      // TODO: do validation
-      if (!productBody)
-        return successResponse({ message: 'Invalid product data' }, 404);
+      const validationResult = CreateProductSchema.validate(productBody);
+
+      if (validationResult.error)
+        return successResponse({ message: 'Invalid product data' }, 400);
 
       const product = await productService.create(productBody);
       winstonLogger.logInfo(`Created product: ${JSON.stringify(product)}`);
