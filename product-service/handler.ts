@@ -1,24 +1,13 @@
 import * as handlers from './src';
-import { Client } from 'pg';
-// import { StaticProductService } from './src/services/static-product-service';
 import { ProductService } from './src/services/product-service';
 // import { seedProducts } from './src/services/seed-products';
 
-const { PGHOST, PGUSER, PGDATABASE, PGPASSWORD, PGPORT } = process.env;
-
-const dbClient = new Client({
-  host: PGHOST,
-  user: PGUSER,
-  database: PGDATABASE,
-  password: PGPASSWORD,
-  port: Number(PGPORT),
-});
-dbClient.connect();
-// const productService = new StaticProductService();
-const productService = new ProductService(dbClient);
+// pooling connection is moved into lambdas
+// https://github.com/brianc/node-postgres/issues/1206#issuecomment-375021365
+const productService = new ProductService();
 
 // seed database with mock data
-// seedProducts(dbClient);
+// seedProducts();
 
 export const getProductById = handlers.getProductByIdHandler(productService);
 export const getAllProducts = handlers.getAllProductsHandler(productService);

@@ -10,9 +10,13 @@ export const createProductHandler =
 
       const validationResult = CreateProductSchema.validate(productBody);
 
-      if (validationResult.error)
-        return successResponse({ message: 'Invalid product data' }, 400);
+      if (validationResult.error) {
+        winstonLogger.logInfo(
+          `Validation error: ${JSON.stringify(validationResult)}`
+        );
 
+        return successResponse({ message: 'Invalid product data' }, 400);
+      }
       const product = await productService.create(productBody);
       winstonLogger.logInfo(`Created product: ${JSON.stringify(product)}`);
       return successResponse(product);
