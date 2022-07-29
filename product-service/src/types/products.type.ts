@@ -20,9 +20,9 @@ export interface ISeparateProduct {
 export const CreateProductSchema = Joi.object({
   title: Joi.string().min(1).required(),
   description: Joi.string().min(1).required(),
-  price: Joi.number().required(),
+  price: Joi.number().min(0).required(),
   image: Joi.string().required(),
-  count: Joi.number().required(),
+  count: Joi.number().min(0).required(),
 });
 
 export interface ISeparateStock {
