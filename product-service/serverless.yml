@@ -6,10 +6,17 @@ provider:
   runtime: nodejs12.x
   stage: dev
   region: us-east-1
+  environment:
+    PGHOST: ${self:custom.dotenvVars.PGHOST, env:PGHOST, ''}
+    PGUSER: ${self:custom.dotenvVars.PGUSER, env:PGUSER, ''}
+    PGDATABASE: ${self:custom.dotenvVars.PGDATABASE, env:PGDATABASE, ''}
+    PGPASSWORD: ${self:custom.dotenvVars.PGPASSWORD, env:PGPASSWORD, ''}
+    PGPORT: ${self:custom.dotenvVars.PGPORT, env:PGPORT, ''}
 
 plugins:
   - serverless-auto-swagger
   - serverless-webpack
+  - serverless-offline
 
 custom:
   autoswagger:
@@ -18,6 +25,9 @@ custom:
   webpack:
     webpackConfig: 'webpack.config.js'
     includeModules: true
+    dotenvVars: ${file(configs.js)}
+  serverless-offline:
+    httpPort: 8000
 
 functions:
   getProductById:
