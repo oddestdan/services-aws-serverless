@@ -1,0 +1,33 @@
+{
+  "name": "import-service",
+  "version": "1.0.0",
+  "description": "Import Service API (AWS API Gateway + AWS Lambda + AWS S3 + Serverless)",
+  "main": "handler.js",
+  "scripts": {
+    "dev": "sls offline",
+    "deploy": "sls deploy"
+  },
+  "devDependencies": {
+    "@aws-sdk/types": "^3.15.0",
+    "@types/aws-lambda": "^8.10.73",
+    "@types/node": "^10.17.56",
+    "@types/serverless": "^1.78.23",
+    "dotenv": "^8.2.0",
+    "fork-ts-checker-webpack-plugin": "^3.0.1",
+    "serverless": "^3.21.0",
+    "serverless-offline": "^9.0.0",
+    "serverless-webpack": "^5.4.0",
+    "ts-loader": "^5.3.3",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.2.4",
+    "webpack": "^4.29.0",
+    "webpack-node-externals": "^1.7.2"
+  },
+  "author": "oddestdan",
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.1185.0",
+    "csv-parser": "^3.0.0",
+    "winston": "^3.8.1"
+  }
+}
