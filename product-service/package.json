@@ -1,7 +1,7 @@
 {
   "name": "product-service",
   "version": "1.0.0",
-  "description": "Product Service API (AWS API Gateway + AWS Lambda + Serverless)",
+  "description": "Product Service API (AWS API Gateway + AWS Lambda + AWS RDS + Serverless)",
   "main": "handler.js",
   "scripts": {
     "dev": "sls offline",
@@ -25,7 +25,7 @@
     "webpack": "^4.29.0",
     "webpack-node-externals": "^1.7.2"
   },
-  "author": "JSCC",
+  "author": "oddestdan",
   "license": "MIT",
   "dependencies": {
     "joi": "^17.6.0",
