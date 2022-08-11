@@ -12,6 +12,16 @@ provider:
     PGDATABASE: ${self:custom.dotenvVars.PGDATABASE, env:PGDATABASE, ''}
     PGPASSWORD: ${self:custom.dotenvVars.PGPASSWORD, env:PGPASSWORD, ''}
     PGPORT: ${self:custom.dotenvVars.PGPORT, env:PGPORT, ''}
+    SQS_URL:
+      Ref: SQSQueue
+    SNS_ARN:
+      Ref: SNSTopic
+
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action: 'sns:*'
+      Resource:
+        - Ref: SNSTopic
 
 plugins:
   - serverless-auto-swagger
@@ -28,6 +38,35 @@ custom:
     dotenvVars: ${file(configs.js)}
   serverless-offline:
     httpPort: 8000
+
+resources:
+  Resources:
+    SQSQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: catalogItemsQueue
+    SNSTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        TopicName: createProductTopic
+    SNSSubscription:
+      Type: AWS::SNS::Subscription
+      Properties:
+        Endpoint: oddestdan@gmail.com
+        Protocol: email
+        TopicArn:
+          Ref: SNSTopic
+
+  Outputs:
+    catalogItemsQueueUrl:
+      Value: !Ref SQSQueue
+      Export:
+        Name: !Sub '${AWS::StackName}-catalogItemsQueueUrl'
+    catalogItemsQueueArn:
+      Value:
+        Fn::GetAtt: [SQSQueue, Arn]
+      Export:
+        Name: !Sub '${AWS::StackName}-catalogItemsQueueArn'
 
 functions:
   getProductById:
@@ -59,3 +98,12 @@ functions:
             schema:
               application/json: ${file(src/schemas/createProductSchema.json)}
           bodyType: IProduct
+  catalogBatchProcess:
+    handler: handler.catalogBatchProcess
+    events:
+      - sqs:
+          batchSize: 5
+          arn:
+            Fn::GetAtt:
+              - SQSQueue
+              - Arn

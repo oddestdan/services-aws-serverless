@@ -8,6 +8,8 @@ provider:
   region: us-east-1
   environment:
     BUCKET: ${self:custom.dotenvVars.BUCKET, env:BUCKET, ''}
+    SQS_URL:
+      Fn::ImportValue: 'product-service-dev-catalogItemsQueueUrl'
 
   iamRoleStatements:
     - Effect: 'Allow'
@@ -19,6 +21,10 @@ provider:
         - 's3:*'
       Resource:
         - 'arn:aws:s3:::aws-import-service-catalog/*'
+    - Effect: 'Allow'
+      Action: 'sqs:*'
+      Resource:
+        - Fn::ImportValue: product-service-dev-catalogItemsQueueArn
 
 plugins:
   - serverless-webpack

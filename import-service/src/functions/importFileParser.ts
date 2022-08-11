@@ -4,7 +4,7 @@ import { errorResponse, successResponse } from '../utils/apiResponseBuilder';
 
 import type { S3Event } from 'aws-lambda';
 import type { Readable } from 'stream';
-import { S3 } from 'aws-sdk';
+import { S3, SQS } from 'aws-sdk';
 
 function processRecordsFromStream(
   stream: Readable,
@@ -31,6 +31,9 @@ export const importFileParser = (s3: S3) => async (event: S3Event) => {
     `START Parse file event records: ${JSON.stringify(event.Records)}`
   );
 
+  const SQSInstance = new SQS();
+  const queueUrl = process.env.SQS_URL;
+
   try {
     const fileRecords = event.Records.filter(
       (record) => !!record.s3.object.size
@@ -50,8 +53,14 @@ export const importFileParser = (s3: S3) => async (event: S3Event) => {
 
         return processRecordsFromStream(csvS3Stream, async (product) => {
           winstonLogger.logInfo(
-            `END Parsed product: ${JSON.stringify(product)}`
+            `END Parsed product: ${JSON.stringify(product)}
+            Sending product via SQS to ${queueUrl}`
           );
+
+          await SQSInstance.sendMessage({
+            QueueUrl: queueUrl,
+            MessageBody: JSON.stringify(product),
+          }).promise();
 
           winstonLogger.logInfo(`START Copy from ${bucketName}/${objectKey}`);
           await s3
