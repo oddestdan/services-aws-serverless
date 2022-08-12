@@ -37,7 +37,7 @@ export const catalogBatchProcessHandler =
       }
 
       winstonLogger.logInfo(
-        `Sending ${snsTopic} SNS notification for ${products}`
+        `Sending ${snsTopic} SNS notification for ${JSON.stringify(products)}`
       );
       await snsInstance
         .publish({
