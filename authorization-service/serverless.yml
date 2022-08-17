@@ -32,13 +32,3 @@ resources:
 functions:
   basicAuthorizer:
     handler: handler.basicAuthorizer
-    events:
-      - http:
-          path: tokenauth
-          method: post
-          cors: true
-          request:
-            schemas:
-              application/json:
-                type: object
-                properties: {}

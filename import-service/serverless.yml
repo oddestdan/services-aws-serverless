@@ -56,6 +56,7 @@ functions:
               Fn::ImportValue: basicAuthorizerArn
             identitySource: method.request.header.Authorization
             type: token
+            resultTtlInSeconds: 0
 
   importFileParser:
     handler: handler.importFileParser

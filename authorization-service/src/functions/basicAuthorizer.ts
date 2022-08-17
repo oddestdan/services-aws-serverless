@@ -5,6 +5,8 @@ enum EffectType {
   DENY = 'Deny',
 }
 
+const tokenType = 'TOKEN';
+
 const generatePolicy = (
   principalId: string,
   Resource: string,
@@ -27,14 +29,14 @@ const generatePolicy = (
 
 export const basicAuthorizer = () => async (event, _, cb) => {
   winstonLogger.logInfo(`Authorization event: ${JSON.stringify(event)}`);
-  const authToken = event.authorizationToken;
+  const { type, methodArn, authorizationToken } = event;
 
-  if (!authToken) {
+  if (type !== tokenType) {
     return cb(`Unauthorized: Authorization Header is missing`);
   }
 
   try {
-    const encodedCreds = authToken.split(' ')[1];
+    const encodedCreds = authorizationToken.split(' ')[1];
     const buff = Buffer.from(encodedCreds, 'base64');
     const plainCreds = buff.toString('utf-8').split(':');
     const [username, password] = plainCreds;
