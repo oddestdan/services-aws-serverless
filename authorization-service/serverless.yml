@@ -21,11 +21,24 @@ custom:
   serverless-offline:
     httpPort: 8000
 
+resources:
+  Outputs:
+    basicAuthorizer:
+      Value:
+        Fn::GetAtt: [BasicAuthorizerLambdaFunction, Arn]
+      Export:
+        Name: !Sub 'basicAuthorizerArn'
+
 functions:
   basicAuthorizer:
     handler: handler.basicAuthorizer
     events:
       - http:
           path: tokenauth
-          method: get
+          method: post
           cors: true
+          request:
+            schemas:
+              application/json:
+                type: object
+                properties: {}

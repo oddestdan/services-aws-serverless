@@ -50,6 +50,13 @@ functions:
             parameters:
               querystrings:
                 name: true
+          authorizer:
+            name: basicAuthorizer
+            arn:
+              Fn::ImportValue: basicAuthorizerArn
+            identitySource: method.request.header.Authorization
+            type: token
+
   importFileParser:
     handler: handler.importFileParser
     events:

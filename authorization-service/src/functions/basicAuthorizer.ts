@@ -1,10 +1,14 @@
-import { successResponse } from '../utils/apiResponseBuilder';
 import { winstonLogger } from '../utils/winstonLogger';
+
+enum EffectType {
+  ALLOW = 'Allow',
+  DENY = 'Deny',
+}
 
 const generatePolicy = (
   principalId: string,
   Resource: string,
-  Effect = 'Allow'
+  Effect = EffectType.ALLOW
 ) => {
   return {
     principalId,
@@ -21,16 +25,23 @@ const generatePolicy = (
   };
 };
 
-export const basicAuthorizer = () => async (event) => {
+export const basicAuthorizer = () => async (event, _, cb) => {
   winstonLogger.logInfo(`Authorization event: ${JSON.stringify(event)}`);
+  const authToken = event.authorizationToken;
+
+  if (!authToken) {
+    return cb(`Unauthorized: Authorization Header is missing`);
+  }
 
   try {
-    const authToken = event.authorizationToken;
-
     const encodedCreds = authToken.split(' ')[1];
     const buff = Buffer.from(encodedCreds, 'base64');
     const plainCreds = buff.toString('utf-8').split(':');
     const [username, password] = plainCreds;
+
+    if (!username || !password) {
+      return cb(`Forbidden`);
+    }
 
     winstonLogger.logInfo(
       `Retrieved username: ${username} and password: ${password}`
@@ -38,17 +49,15 @@ export const basicAuthorizer = () => async (event) => {
 
     const storedUserPassword = process.env[username];
     const effect =
-      !storedUserPassword || storedUserPassword !== password ? 'Deny' : 'Allow';
-
-    if (effect === 'Deny') {
-      return successResponse({ message: `Forbidden` }, 403);
-    }
+      !storedUserPassword || storedUserPassword !== password
+        ? EffectType.DENY
+        : EffectType.ALLOW;
 
     const policy = generatePolicy(encodedCreds, event.methodArn, effect);
     winstonLogger.logInfo(`Generated policy: ${JSON.stringify(policy)}`);
 
-    return successResponse(policy);
+    return cb(null, policy);
   } catch (error) {
-    return successResponse({ message: `Unauthorized: ${error.message}` }, 401);
+    return cb(`Unauthorized: ${error.message}`);
   }
 };
