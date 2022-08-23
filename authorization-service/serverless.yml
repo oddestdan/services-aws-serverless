@@ -1,0 +1,34 @@
+service: authorization-service
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: dev
+  region: us-east-1
+  environment:
+    oddestdan: ${self:custom.dotenvVars.oddestdan, env:oddestdan, ''}
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+custom:
+  webpack:
+    webpackConfig: 'webpack.config.js'
+    includeModules: true
+    dotenvVars: ${file(configs.js)}
+  serverless-offline:
+    httpPort: 8000
+
+resources:
+  Outputs:
+    basicAuthorizer:
+      Value:
+        Fn::GetAtt: [BasicAuthorizerLambdaFunction, Arn]
+      Export:
+        Name: !Sub 'basicAuthorizerArn'
+
+functions:
+  basicAuthorizer:
+    handler: handler.basicAuthorizer
