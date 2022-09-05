@@ -1,0 +1,25 @@
+{
+  "name": "bff-service",
+  "version": "1.0.0",
+  "description": "Backend For Frontend Service",
+  "main": "index.js",
+  "author": "oddestdan",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "app": "nodemon index.js",
+    "eb:init": "eb init --platform node.js --region us-east-1",
+    "eb:create": "eb create development --single --cname oddestdan-bff-api-develop",
+    "eb:terminate": "eb terminate",
+    "eb:setenv": "eb setenv `cat .env.eb | sed '/^#/ d' | sed '/^$/ d'`"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "express": "^4.18.1",
+    "dotenv": "^16.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
